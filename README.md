@@ -10,9 +10,9 @@
 
 #### Tutor: Tomás Alessandro Yovino
 
-#### Practica Integradora Proyecto Final
+#### Desafio 1 Modulo 2 Implementacion de Login
 
-#### El proyecto de integración pide que se realize la implementacion de MongoDB en nuestro proyecto que teniamois avanzado en el cual se utiliza HandleBars para Frontend, Node ExpressJs como backend y SocketIO para WebSocket.Tambien se pide implementar un chat usando SocketIO. Esta implementacion nos permitira mediante practica aprender a implementara MongoDB y Moongoe; así como usar WebSockets.
+#### El proyecto de integración de Login pide implementar un simple login con sistema de roles simple, esto apra aprender como funcionan las sessions en express asi como los middalewares para crear una logica de Login
 
 ---
 ## Links de vistas
@@ -21,6 +21,12 @@
 [Vista de Carrito predeterminado](http://localhost:8080/carts/65df75400b81101bd1f5099d)
 [Vista Productos en Tiempo Real](http://localhost:8080/realtimeproducts)
 [Chat en tiempo real](http://localhost:8080/chat)
+[Login](http://localhost:8080/login)
+[Registro](http://localhost:8080/register)
+
+Admin user:
+adminCoder@coder.com
+123
 
 ## Producto ejemplo para subir
 ```JSON
@@ -38,6 +44,11 @@
   }
 ```
 ## Cosas a realizadas
+
+
+
+---
+## Cosas ya hechas 
 
 ### Obtener productos con formato de paginacion
 #### Para obtener el siguiente formato de paginacion:
@@ -61,8 +72,6 @@
 ### Carrito nuevas features
 #### 
 
----
-## Cosas ya hechas 
 
 ### Conectar Mongoose con MongoDB Atlas
 #### Se uso en app.js mongoose.connect para por medio de un url proporcionado por el servicio web de MongoDB Atlas conetarnos a las colecciones de los servicios que vamos usar, por medio dbName se especifica la base de datos en este caso "ecommerce" 

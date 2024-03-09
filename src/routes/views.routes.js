@@ -8,11 +8,12 @@ const DBMessagesManager = require("../dao/DBMessagesManager");
 const messages = new DBMessagesManager()
 const DBCartManager = require("../dao/DBCartManager");
 const cart = new DBCartManager()
+const { authMdw, loggedRedirect } = require("../middleware/auth.middleware");
 
 
 const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', authMdw, (req, res) => {
     const { page = 1, limit = 5, sort } = req.query;
 
     let query = {}
@@ -30,12 +31,13 @@ router.get('/', (req, res) => {
     const url = new URL(`${req.protocol}://${req.get('host')}${req.originalUrl}`);
 
     products.getProducts(page, limit, sort, query, url).then(result => {
-        console.log(result)
+        console.log(req.session.user)
         res.render("index", {
-            title: "Proyecto final 2",
+            title: "Desafio 1 Modulo 2",
             products: result.payload,
             nextPage: result.nextLink,
             prevPage: result.prevLink,
+            user: req.session.user,
             style: "styles.css"
         })
     }).catch(err => {
@@ -44,7 +46,7 @@ router.get('/', (req, res) => {
     });
 })
 
-router.get('/realtimeproducts', (req, res) => {
+router.get('/realtimeproducts', authMdw, (req, res) => {
     const { page = 1, limit = 5, sort } = req.query;
 
     let query = {}
@@ -63,8 +65,11 @@ router.get('/realtimeproducts', (req, res) => {
 
     products.getProducts(page, limit, sort, query, url).then(result => {
         res.render("realtimeproducts", {
-            title: "Proyecto final 2 - Productos en tiempo real",
-            products: result.payload
+            title: "Desafio 1 Modulo 2 - Productos en tiempo real",
+            products: result.payload,
+            nextPage: result.nextLink,
+            prevPage: result.prevLink,
+            user: req.session.user
         })
     }).catch(err => {
         console.log(err);
@@ -76,7 +81,7 @@ router.get('/chat', (req, res) => {
 
     messages.getAllMessages().then(result => {
         res.render("chat", {
-            title: "Proyecto final 2 - Chat en tiempo real",
+            title: "Desafio 1 Modulo 2 - Chat en tiempo real",
             messages: result
         })
     }).catch(err => {
@@ -85,7 +90,7 @@ router.get('/chat', (req, res) => {
     });
 })
 
-router.get('/products', (req, res) => {
+router.get('/products', authMdw, (req, res) => {
     const { page = 1, limit = 5, sort } = req.query;
 
     let query = {}
@@ -104,10 +109,11 @@ router.get('/products', (req, res) => {
 
     products.getProducts(page, limit, sort, query, url).then(result => {
         res.render("products", {
-            title: "Productos proyecto final",
+            title: "Desafio 1 Modulo 2",
             products: result.payload,
             nextPage: result.nextLink,
             prevPage: result.prevLink,
+            user: req.session.user,
             style: "styles.css"
         })
     }).catch(err => {
@@ -116,13 +122,13 @@ router.get('/products', (req, res) => {
     });
 })
 
-router.get('/carts/:cid', (req, res) => {
+router.get('/carts/:cid', authMdw, (req, res) => {
     const idCart = req.params.cid
 
     cart.getCartProducts(idCart).then(result => {
         console.log(result)
         res.render("cart", {
-            title: "Proyecto final 2 - Carrito de Compras",
+            title: "Desafio 1 Modulo 2 - Carrito de Compras",
             product: result
         })
     }).catch(err => {
@@ -131,5 +137,16 @@ router.get('/carts/:cid', (req, res) => {
     });
 })
 
+router.get('/login', loggedRedirect, (req, res) => {
+        res.render("login", {
+            title: "Desafio 1 Modulo 2 - Login"
+        })
+})
+
+router.get('/register', loggedRedirect, (req, res) => {
+    res.render("register", {
+        title: "Desafio 1 Modulo 2 - Register"
+    })
+})
 
 module.exports = router
